@@ -1,0 +1,22 @@
+{
+  "name": "not-a-contest-back-end",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/sabrinagear/notacontest-back-end.git",
+  "author": "SabrinaGear <sabrinagear.ft@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "helmet": "^3.15.1",
+    "knex": "^0.16.3",
+    "sqlite3": "^4.0.6"
+  },
+  "devDependencies": {
+    "morgan": "^1.9.1",
+    "nodemon": "^1.18.10"
+  },
+  "scripts": {
+    "server": "nodemon"
+  }
+}
