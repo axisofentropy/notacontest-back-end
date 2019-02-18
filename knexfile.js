@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const localPg = {
   host: "localhost",
   database: process.env.DB_NAME,
