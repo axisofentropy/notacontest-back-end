@@ -36,12 +36,7 @@ router.get("/student/:studentId", (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  if (
-    !req.body.task ||
-    !req.body.points ||
-    !req.body.points ||
-    !req.body.date
-  ) {
+  if (!req.body.task || !req.body.points || !req.body.date) {
     return res.status(400).json({ message: "Please provide all information." });
   }
 
@@ -54,7 +49,7 @@ router.post("/", async (req, res) => {
       task: req.body.task,
       points: req.body.points,
       scores: updatedArray,
-      date: req.body.date,
+      date: Date.parse(req.body.date),
       student: req.body.studentId
     });
   } catch (err) {

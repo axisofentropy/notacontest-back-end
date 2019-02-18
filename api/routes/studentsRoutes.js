@@ -13,14 +13,49 @@ router.get("/", (req, res) => {
 
 router.get("/:id", (req, res) => {
   const { id } = req.params;
-  db.get(id);
-  db.getScores(id)
+  db.get(id)
     .then(student => {
       if (student) {
         res.status(200).json(student);
       } else {
         res.status(404).json({
           message: "The student with the specified ID does not exist."
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).json(err.message);
+    });
+});
+
+router.get("/scores/:id", (req, res) => {
+  const { id } = req.params;
+  db.getScores(id)
+    .then(scores => {
+      if (scores) {
+        res.status(200).json(scores);
+      } else {
+        res.status(401).json({
+          message:
+            "The student with the specified ID does not have any points for this time period."
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).json(err.message);
+    });
+});
+
+router.get("/total/:id", (req, res) => {
+  const { id } = req.params;
+  db.getTotal(id)
+    .then(scores => {
+      if (scores) {
+        res.status(200).json(scores);
+      } else {
+        res.status(401).json({
+          message:
+            "The student with the specified ID does not have any points for this time period."
         });
       }
     })
@@ -38,7 +73,7 @@ router.post("/", async (req, res) => {
 
   try {
     let newStudent = await db.insert(req.body);
-    let updatedArray = await db.find();
+    let updatedArray = await db.get();
     return res.status(201).json({
       id: newStudent.id,
       name: req.body.name,
@@ -52,14 +87,14 @@ router.post("/", async (req, res) => {
 router.delete("/:id", async (req, res) => {
   const { id } = req.params;
   try {
-    let student = await db.find(id);
+    let student = await db.get(id);
     if (!student) {
       res
         .status(404)
         .json({ message: "The student with the specified ID does not exist." });
     }
     await db.remove(id);
-    let updatedArray = await db.find();
+    let updatedArray = await db.get();
     return res.status(200).json({
       student: updatedArray,
       message: "successfully deleted"
@@ -77,7 +112,7 @@ router.put("/:id", async (req, res) => {
   if (!name) {
     return res.status(400).json({ message: "Please provide a name." });
   } else {
-    db.find(id).then(student => {
+    db.get(id).then(student => {
       if (!student) {
         return res.status(404).json({
           message: "The student with the specified ID does not exist."
@@ -87,8 +122,8 @@ router.put("/:id", async (req, res) => {
   }
   try {
     let update = await db.update(id, student);
-    let updatedStudent = await db.find(id);
-    let updatedArray = await db.find();
+    let updatedStudent = await db.get(id);
+    let updatedArray = await db.get();
     return res
       .status(200)
       .json({ student: updatedNote, students: updatedArray });

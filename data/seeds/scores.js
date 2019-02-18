@@ -9,21 +9,21 @@ exports.seed = function(knex, Promise) {
           id: 1,
           task: "Pop Quiz",
           points: 3,
-          date: "2019-02-13T07:42:59.397Z",
+          date: 1550471565370,
           studentId: 1
         },
         {
           id: 2,
           task: "Pop Quiz",
           points: 3,
-          date: "2019-02-13T07:42:59.397Z",
+          date: 1550471565370,
           studentId: 2
         },
         {
           id: 3,
           task: "Stretch",
           points: 3,
-          date: "2019-02-13T07:42:59.397Z",
+          date: 1550477952667,
           studentId: 4
         }
       ]);

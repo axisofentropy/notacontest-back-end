@@ -12,8 +12,17 @@ module.exports = {
   getScores: function(id) {
     return db("scores as sc")
       .join("students as s", "s.id", "sc.studentId")
-      .select("sc.score")
-      .where("score.studentId", id);
+      .select("sc.points", "sc.date")
+      .where("sc.studentId", id);
+  },
+
+  getTotal: function(id) {
+    let scores = db("scores as sc")
+      .join("students as s", "s.id", "sc.studentId")
+      .select("sc.points")
+      .where("sc.studentId", id);
+    const total = scores.map(x => x.points).reduce((t, a) => t + a);
+    return total;
   },
 
   insert: function(student) {
