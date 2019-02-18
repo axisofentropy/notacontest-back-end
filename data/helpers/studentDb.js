@@ -12,7 +12,7 @@ module.exports = {
   getScores: function(id) {
     return db("scores as sc")
       .join("students as s", "s.id", "sc.studentId")
-      .select("sc.points", "sc.date")
+      .select("sc.task", "sc.points", "sc.date")
       .where("sc.studentId", id);
   },
 
