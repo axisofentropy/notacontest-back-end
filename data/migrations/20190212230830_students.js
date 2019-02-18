@@ -49,7 +49,8 @@ function createScoresTable(knex) {
         scores.increments();
         scores.text("task").notNullable();
         scores.integer("points").notNullable();
-        scores.integer("date").notNullable();
+        scores.bigint("date").notNullable(); // production ONLY
+        // scores.integer("date").notNullable(); development ONLY
 
         scores
           .integer("studentId")
